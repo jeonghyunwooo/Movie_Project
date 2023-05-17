@@ -30,7 +30,6 @@ export default{
     // 평점 높은 영화
     GET_TOP_RATED_MOVIES(state,movies){
       movies.forEach(elem => {
-        console.log(elem)
         state.toprated_movies.push(elem)
       })
     },

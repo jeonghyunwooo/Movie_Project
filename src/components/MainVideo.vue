@@ -13,7 +13,7 @@
 
 <script>
 // require 자료 요청
-const main_video_URL = require('@/assets/어벤져스.mp4');
+const main_video_URL = require('@/assets/인터스텔라2.mp4');
 
 export default {
   name: 'MainVideo',

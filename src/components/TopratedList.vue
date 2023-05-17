@@ -7,6 +7,8 @@
           <TopratedListItem :t_movie="t_movie"></TopratedListItem>
         </div>
       </swiper-slide>
+      <div class="swiper-button-next" slot="button-next"></div>
+      <div class="swiper-button-prev" slot="button-prev"></div>
     </swiper>
   </div>
 </template>
@@ -31,33 +33,45 @@ export default {
     swiperOptions() {
       return {
         slidesPerView: 9,
+        slidesPerGroup: 9,
         spaceBetween: 20,
         autoplay: {
           delay: 3000,
           disableOnInteraction: false
         },
         loop: true, // 데이터가 끝까지 다읽으면 처음으로 돌아옴
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        },
         breakpoints: {
           1700:{
-            slidesPerView: 8
+            slidesPerView: 8,
+            slidesPerGroup: 8,
           },
           1520:{
-            slidesPerView: 7
+            slidesPerView: 7,
+            slidesPerGroup: 7,
           },
           1400:{
-            slidesPerView: 6
+            slidesPerView: 6,
+            slidesPerGroup: 6,
           },
           1190:{
-            slidesPerView: 5
+            slidesPerView: 5,
+            slidesPerGroup: 5,
           },
           980:{
-            slidesPerView: 4
+            slidesPerView: 4,
+            slidesPerGroup: 4,
           },
           780: {
-            slidesPerView: 3
+            slidesPerView: 3,
+            slidesPerGroup: 3
           },
           550: {
-            slidesPerView: 2
+            slidesPerView: 2,
+            slidesPerGroup: 2,
           },
           150: {
             slidesPerView: 1
@@ -92,5 +106,30 @@ export default {
   margin-left: 20px;
   margin-bottom: 20px;
   color: white;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: transparent;
+  color: rgba(108, 157, 63, 0.471);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.swiper-button-next {
+  right: 5px;
+}
+
+.swiper-button-prev {
+  left: 5px;
 }
 </style>
