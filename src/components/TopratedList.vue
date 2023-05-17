@@ -32,15 +32,15 @@ export default {
     },
     swiperOptions() {
       return {
-        slidesPerView: 9,
-        slidesPerGroup: 9,
+        slidesPerView: 9, // 화면 최대 크기일시 나타나는 이미지의 수
+        slidesPerGroup: 9,  // 버튼 클릭 시 이동하는 이미지의 수 
         spaceBetween: 20,
         autoplay: {
           delay: 3000,
           disableOnInteraction: false
         },
         loop: true, // 데이터가 끝까지 다읽으면 처음으로 돌아옴
-        navigation: {
+        navigation: { // swiper, swiperSlide 에서 재공하는 기능 (버튼)
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
         },
@@ -107,7 +107,7 @@ export default {
   margin-bottom: 20px;
   color: white;
 }
-
+/* 버튼 css */
 .swiper-button-next,
 .swiper-button-prev {
   position: absolute;
