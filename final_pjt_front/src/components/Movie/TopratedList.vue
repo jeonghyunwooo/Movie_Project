@@ -4,7 +4,7 @@
     <swiper :options="swiperOptions">
       <swiper-slide v-for="t_movie in toprated_movies" :key="t_movie.id">
         <div class="slide-content">
-          <TopratedListItem :t_movie="t_movie"/>
+          <TopratedListItem :t_movie="t_movie" @TopratedListItem_TopratedList="TopratedListToHomeView"/>
         </div>
       </swiper-slide>
       <div class="swiper-button-next" slot="button-next"></div>
@@ -26,6 +26,17 @@ export default {
     swiper,
     swiperSlide
   },
+  data(){
+    return{
+      getTopratedMovieDetail:'',
+    }
+  },
+  methods:{
+    TopratedListToHomeView(input){
+      this.getTopratedMovieDetail = input
+      this.$emit('TopratedList-HomeView',this.getTopratedMovieDetail)
+    }
+  },
   computed: {
     toprated_movies() {
       return this.$store.getters.toprated_movies
@@ -35,10 +46,10 @@ export default {
         slidesPerView: 9, // 화면 최대 크기일시 나타나는 이미지의 수
         slidesPerGroup: 9,  // 버튼 클릭 시 이동하는 이미지의 수 
         spaceBetween: 20,
-        autoplay: {
-          delay: 3000,
-          disableOnInteraction: false
-        },
+        // autoplay: {
+        //   delay: 3000,
+        //   disableOnInteraction: false
+        // },
         loop: true, // 데이터가 끝까지 다읽으면 처음으로 돌아옴
         navigation: { // swiper, swiperSlide 에서 재공하는 기능 (버튼)
           nextEl: '.swiper-button-next',

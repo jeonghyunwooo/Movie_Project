@@ -1,6 +1,10 @@
 <template>
   <div>
-    <img class="Popular_img" :src="poster_path" style="width: 140px; height: 190px;" alt="">
+    <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      <img @click="PopularListItemToPopularList" class="Popular_img" :src="poster_path" style="width: 140px; height: 190px;" alt="">
+      <!-- <img class="Popular_img" :src="poster_path" style="width: 140px; height: 190px;" alt=""> -->
+    </a>
+
   </div>
 </template>
 
@@ -15,7 +19,12 @@ export default {
     }
   },
   props: {
-    p_movie: Object
+    p_movie: Object,
+  },
+  methods: {
+    PopularListItemToPopularList:function(){
+      this.$emit("PopularListItem_PopularList",this.p_movie)
+    }
   },
   watch: {
     p_movie: {

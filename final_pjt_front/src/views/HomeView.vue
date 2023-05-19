@@ -2,8 +2,31 @@
   <div class="home">
     <div><MainVideo/></div>
     <hr>
-    <div class="Popular_list"><PopularList/></div>
-    <div class="Popular_list"><TopratedList/></div>
+    <div class="Popular_list"><PopularList @PopualrList-HomeView="arriveHomeView"/></div>
+    <div class="Popular_list"><TopratedList @TopratedList-HomeView="arriveHomeView_t"/></div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-dialog modal-dialog-scrollable">
+              {{getPopularMovieDetail}}
+              {{getTopratedMovieDetail}}
+            </div>
+              <input type="text">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Understood</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -18,6 +41,12 @@ export default {
     MainVideo,
     PopularList,
     TopratedList,
+  },
+  data: function(){
+    return{
+      getPopularMovieDetail : '',
+      getTopratedMovieDetail:'',
+    }
   },
   created() {
     // this.getMainVideo()
@@ -36,6 +65,15 @@ export default {
     getTopratedMovies() {
       this.$store.dispatch('getTopratedMovies')
     },
+    arriveHomeView(input) {
+      this.getPopularMovieDetail = input
+      this.getTopratedMovieDetail = ''
+    },
+    arriveHomeView_t(input) {
+      this.getTopratedMovieDetail = input
+      this.getPopularMovieDetail = ''
+
+    }
   }
 }
 </script>

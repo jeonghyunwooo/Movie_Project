@@ -1,6 +1,8 @@
 <template>
   <div>
-    <img class="Popular_img" :src="poster_path" style="width: 140px; height: 190px;" alt="">
+    <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      <img @click="TopratedListItemToTopratedList" class="Popular_img" :src="poster_path" style="width: 140px; height: 190px;">
+    </a>
   </div>
 </template>
 
@@ -12,6 +14,11 @@ export default {
   data() {
     return {
       poster_path:make_img_URL + this.t_movie.poster_path,
+    }
+  },
+  methods:{
+    TopratedListItemToTopratedList(){
+      this.$emit("TopratedListItem_TopratedList",this.t_movie)
     }
   },
   props:{

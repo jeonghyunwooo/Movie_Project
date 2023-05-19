@@ -1,10 +1,11 @@
 <template>
   <div class="image-container">
     <h3 id="Popular_word">실시간 인기 영화</h3>
-    <swiper :options="swiperOptions">
+    <swiper :options="swiperOptions" >
+      <!-- <swiper-slide v-for="p_movie in popular_movies" :key="p_movie.id" @click-slide="posterinfo"> -->
       <swiper-slide v-for="p_movie in popular_movies" :key="p_movie.id">
-        <div class="slide-content">
-          <PopularListItem :p_movie="p_movie"></PopularListItem>
+        <div class="slide-content" >
+          <PopularListItem :p_movie="p_movie" @PopularListItem_PopularList="PopularListToHomeView"></PopularListItem>
         </div>
       </swiper-slide>
       <div class="swiper-button-next" slot="button-next"></div>
@@ -26,19 +27,37 @@ export default {
     swiper,
     swiperSlide
   },
+  data : function(){
+    return{
+      getPopularMovieDetail:'',
+    }
+  },
+  methods:{
+    PopularListToHomeView(input){
+      this.getPopularMovieDetail = input
+      this.$emit('PopualrList-HomeView',this.getPopularMovieDetail)
+    },
+    posterinfo(index,reallyIndex){
+      console.log(index,reallyIndex)
+    }
+  },
   computed: {
     popular_movies() {
-      return this.$store.getters.popular_movies.slice(0, 20)
+      return this.$store.getters.popular_movies
     },
+
+    // swiper-slide 가 영화의 리스트를 늘려주어 진짜 영화값의 인덱스가 아니라 늘려버린 인덱스로 영화값이 나와 이것을 진짜 인덱스를 찾아 영화를 출력해야한다
+    // @click-slide="posterinfo"함수로 store에서 값을 찾는다
+    
     swiperOptions() {
       return {
         slidesPerView: 9,
         slidesPerGroup: 9,
         spaceBetween: 20,
-        autoplay: {
-          delay: 3000,
-          disableOnInteraction: false
-        },
+        // autoplay: {
+        //   delay: 3000,
+        //   disableOnInteraction: false
+        // },
         loop: true, // 데이터가 끝까지 다읽으면 처음으로 돌아옴
         navigation: {
           nextEl: '.swiper-button-next',

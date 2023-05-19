@@ -4,6 +4,7 @@ import HomeView from '@/views/HomeView'
 import CommunityView from '@/views/CommunityView'
 import MypageView from '@/views/MypageView'
 import LoginView from '@/views/LoginView'
+import SignUpView from '@/views/SignUpView'
 
 Vue.use(VueRouter)
 
@@ -12,6 +13,11 @@ const routes = [
     path: '/',
     name: 'LoginView',
     component: LoginView
+  },
+  {
+    path: '/SignUpView',
+    name: 'SignUpView',
+    component: SignUpView
   },
   {
     path: '/HomeView',
