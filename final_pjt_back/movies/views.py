@@ -5,9 +5,9 @@ from .serializers import PopularMoviesSerializer, TopRatedMoviesSerializer, Tota
 from .models import TotalMovies
 from final_pjt_back.settings import API_SETTINGS
 from django.http import JsonResponse
+import json
 import requests
 import pprint
-import json
 
 api_key = API_SETTINGS['API_KEY']
 tmdb_popular_api = API_SETTINGS['TMDB_POPULAR_API']
@@ -15,47 +15,49 @@ tmdb_top_rated_api = API_SETTINGS['TMDB_TOP_RATED_API']
 
 @api_view(['GET'])
 def get_total_movies(request):
-    for movie_id in range(1,50):
-        try:
-            tmdb_total_api = f'https://api.themoviedb.org/3/movie/{movie_id}'
-            response = requests.get(
-                tmdb_total_api,
-                params={
-                    'api_key' : api_key,
-                    'language' : 'ko-kR',
-                    }
-            ).json()
-            
-            title = response['title'],
-            movie_id = response['id'],
-            release_date = response['release_date'],
-            overview = response['overview'],
-            poster_path = response['poster_path'],
-            vote_average = response['vote_average'],
-            popularity = response['popularity'],
-            youtube_key = response['youtube_key'],
-            runtime = response['runtime'],
-            genre_list = response['genres']
-            genres = []
-            
-            for genre in genre_list:
-                genres.append(genre['name'])
 
-            TotalMovies.objects.create(
-                title=title,
-                movie_id=movie_id,
-                release_date=release_date,
-                overview =overview,
-                poster_path =poster_path,
-                vote_average =vote_average,
-                popularity=popularity,
-                youtube_key=youtube_key,
-                runtime=runtime,
-                genres=genres,
-            )
+    nums = range(51,300)
+    for num in nums:
+        try:
+            video_url = f'https://api.themoviedb.org/3/movie/{num}/videos?api_key={api_key}&language=ko-KR'
+            video = requests.get(video_url).json()
+            if video['results']:
+                video_id = video['results'][0]['key']
+
+                url = f'https://api.themoviedb.org/3/movie/{num}?api_key={api_key}&language=ko-KR'
+                data  = requests.get(url).json()
+                movie_id = data['id']
+                title = data['title']
+                release_date = data['release_date']
+                overview = data['overview']
+                poster_path = data['poster_path']
+                vote_average = data['vote_average']
+                popularity = data['popularity']
+                runtime = data['runtime']
+                genre_list = data['genres']
+                genres = []
+                
+                for genre in genre_list:
+                    genres.append(genre['name'])
+                    
+                TotalMovies.objects.create(
+                    title=title,
+                    movie_id = movie_id,
+                    release_date = release_date,
+                    overview = overview,
+                    poster_path = poster_path,
+                    vote_average = vote_average,
+                    popularity = popularity,
+                    runtime = runtime,
+                    genres = genres,
+                    video_id = video_id, 
+                )
+            else:
+                pass
         except:
             pass
-    return JsonResponse(response)
+    return JsonResponse(data)
+
 
 # Popular_movie_data정보를 TMDB에서 받아오는 code
 @api_view(['GET'])
