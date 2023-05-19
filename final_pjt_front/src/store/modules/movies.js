@@ -34,28 +34,7 @@ export default{
     },
   },
   actions: {
-    //인기 영화 목록 axios
-    // getPopularMovies(context){
-    //   for (let i=1; i<3; i++){
-    //     axios({
-    //       url:TMDB_TOP_RATED_API,
-    //       method:'get',
-    //       params:{
-    //         api_key:TMDB_API_KEY,
-    //         language:'ko-KR',
-    //         page: i
-    //       }
-    //     })
-    //     .then(res =>
-    //       // console.log(res.data) 
-    //       context.commit('GET_POPULAR_MOVIES',res.data.results)
-    //     )
-    //     .catch(err =>
-    //       console.log(err)  
-    //     )
-    //   }
-    // },
-    
+
     //인기 영화 목록 axios(Ver.django)
     getPopularMovies(context){
         axios({

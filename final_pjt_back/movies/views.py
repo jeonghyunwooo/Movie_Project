@@ -16,7 +16,7 @@ tmdb_top_rated_api = API_SETTINGS['TMDB_TOP_RATED_API']
 @api_view(['GET'])
 def get_total_movies(request):
 
-    nums = range(51,300)
+    nums = range(1,300)
     for num in nums:
         try:
             video_url = f'https://api.themoviedb.org/3/movie/{num}/videos?api_key={api_key}&language=ko-KR'

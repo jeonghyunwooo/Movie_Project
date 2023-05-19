@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import MainVideo from '@/components/MainVideo'
-import PopularList from '@/components/PopularList'
-import TopratedList from '@/components/TopratedList'
+import MainVideo from '@/components/Movie/MainVideo'
+import PopularList from '@/components/Movie/PopularList'
+import TopratedList from '@/components/Movie/TopratedList'
 
 export default {
   name: 'HomeView',

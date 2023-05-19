@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import PopularListItem from '@/components/PopularListItem'
+import PopularListItem from '@/components/Movie/PopularListItem'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 // import 'swiper/dist/css/swiper.css'
 import 'swiper/swiper-bundle.css'

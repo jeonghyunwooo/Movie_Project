@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import TopratedListItem from '@/components/TopratedListItem'
+import TopratedListItem from '@/components/Movie/TopratedListItem'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 // import 'swiper/dist/css/swiper.css'
 import 'swiper/swiper-bundle.css'
