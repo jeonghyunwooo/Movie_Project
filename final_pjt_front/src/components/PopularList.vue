@@ -28,7 +28,7 @@ export default {
   },
   computed: {
     popular_movies() {
-      return this.$store.getters.popular_movies
+      return this.$store.getters.popular_movies.slice(0, 20)
     },
     swiperOptions() {
       return {

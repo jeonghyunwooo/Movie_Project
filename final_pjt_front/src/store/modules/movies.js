@@ -1,11 +1,6 @@
 import axios from 'axios'
 
-const TMDB_API_KEY = "3e522bb11d9503474e85e9a710de1de4"
-const TMDB_POPULAR_API = "https://api.themoviedb.org/3/movie/top_rated?api_key=3e522bb11d9503474e85e9a710de1de4&language=ko-kr&page=1"
-// const TMDB_TOP_RATED_API = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=vote_average.desc&without_genres=99,10755&vote_count.gte=200&api_key=3e522bb11d9503474e85e9a710de1de4"
 
-// const TMDB_POPULAR_API = "https://api.themoviedb.org/3/movie/latest?api_key=3e522bb11d9503474e85e9a710de1de4&language=ko-kr"
-// const API_REVIEW = "https://api.themoviedb.org/3/movie/{movie_id}/reviews?api_key=<<api_key>>&language=en-US&page=1"
 const YOUTUBE_API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
 const YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3/search'
 
@@ -64,7 +59,7 @@ export default{
     //인기 영화 목록 axios(Ver.django)
     getPopularMovies(context){
         axios({
-          url:'http://127.0.0.1:8000/movies/popularmovies/',
+          url:'http://127.0.0.1:8000/movies/popular_movies/',
           method:'get',
         })
         .then(res =>
@@ -75,31 +70,23 @@ export default{
           console.log(err)  
         )
       },
-
     //평점 높은순 영화 목록 axios
     getTopratedMovies(context){
-      for (let i=5; i<7; i++){
         axios({
-          url:TMDB_POPULAR_API,
+          url:'http://127.0.0.1:8000/movies/top_rated_movies/',
           method:'get',
-          params:{
-            api_key:TMDB_API_KEY,
-            language:'ko-KR',
-            page: i
-          }
         })
         .then(res =>
           // console.log(res.data) 
-          context.commit('GET_TOP_RATED_MOVIES',res.data.results)
+          context.commit('GET_TOP_RATED_MOVIES',res.data)
         )
         .catch(err =>
           console.log(err)  
         )
-      }
-    },
+      },
 
     // youtube 영화 예고편 axios
-    getYoutubeVideo(context){
+    getYoutubeVideo(){
       axios({
         url: YOUTUBE_URL,
         params:{
@@ -110,8 +97,8 @@ export default{
         },
       })
       .then(res => {
-        // console.log(res)
-        context.commit('GET_YOUTUBE_VIDEO',res.data.items[0])
+        console.log(res)
+        // context.commit('GET_YOUTUBE_VIDEO',res.data.items[0])
       })
       .catch(err =>{
         console.log(err)
