@@ -14,7 +14,7 @@ class TotalMovies(models.Model):
 
     def __str__(self):
         return self.title
-
+s
 class PopularMovies(models.Model):
     title = models.CharField(max_length=100)
     release_date = models.DateField(blank=True)
