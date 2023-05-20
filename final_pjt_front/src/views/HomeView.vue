@@ -18,11 +18,9 @@
               {{getPopularMovieDetail}}
               {{getTopratedMovieDetail}}
             </div>
-              <input type="text">
+              <MovieComments/>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Understood</button>
           </div>
         </div>
       </div>
@@ -34,6 +32,7 @@
 import MainVideo from '@/components/Movie/MainVideo'
 import PopularList from '@/components/Movie/PopularList'
 import TopratedList from '@/components/Movie/TopratedList'
+import MovieComments from '@/components/Movie/MovieComments'
 
 export default {
   name: 'HomeView',
@@ -41,6 +40,7 @@ export default {
     MainVideo,
     PopularList,
     TopratedList,
+    MovieComments,
   },
   data: function(){
     return{

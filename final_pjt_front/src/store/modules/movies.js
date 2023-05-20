@@ -1,18 +1,27 @@
 import axios from 'axios'
-
+import createPersistedState from "vuex-persistedstate";
 
 const YOUTUBE_API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
 const YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3/search'
 
 export default{
+  plugins: [createPersistedState({
+    paths:['comment_id','comments'],
+  })],
+
   state: {
     popular_movies : [],
     toprated_movies : [],
     youtube_video : null,
+    
+    // Test용 변수들 
+    comment_id:1,
+    comments : []
   },
   getters: {
     popular_movies:(state) => state.popular_movies,
-    toprated_movies:(state) => state.toprated_movies
+    toprated_movies:(state) => state.toprated_movies,
+    comments:(state) => state.comments
   },
   
   mutations: {
@@ -32,6 +41,20 @@ export default{
     GET_YOUTUBE_VIDEO(state,video){
       state.youtube_video = video
     },
+
+    CREATE_COMMENT(state,comment){
+      const createdAt = new Date(comment.createdAt);
+      comment.createdAt = createdAt.toLocaleString();
+      state.comments.push(comment)
+      state.comment_id = state.comment_id + 1
+    },
+
+    DELETE_COMMENT(state, id){
+      state.comments = state.comments.filter((comment)=>{
+        // return !(comment.id===id)
+        return comment.id !== id;
+      })
+    }
   },
   actions: {
 
@@ -83,6 +106,16 @@ export default{
         console.log(err)
       })
     },
-
+    createComment(context,payload){
+      const comment = {
+        id:context.state.comment_id,
+        content : payload.content,
+        createdAt: new Date().getTime(),
+      }
+      context.commit('CREATE_COMMENT', comment) 
+    },
+    deleteComment(context, id) {
+      context.commit('DELETE_COMMENT', id);
+    }
   },
 }

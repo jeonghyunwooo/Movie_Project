@@ -4,7 +4,7 @@
       <div class="nav_left">
         <router-link :to="{name: 'HomeView'}" id="movie_logo" >Movie Choice</router-link>
         <router-link :to="{name: 'HomeView'}">Home</router-link>
-        <router-link :to="{name: 'CommunityView'}">Community</router-link>
+        <router-link :to="{name: 'ReviewView'}">Review</router-link>
         <router-link :to="{name: 'MypageView'}">Mypage</router-link>
       </div>
       <div class="nav_right">
