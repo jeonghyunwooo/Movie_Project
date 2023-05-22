@@ -123,7 +123,7 @@ def save_movie_genres(request):
 @api_view(['POST'])
 def comment_create(request, movie_id):
     movie_id = get_object_or_404(TotalMovies, pk=movie_id)
-    serializer = MovieComment(data=request.data)
+    serializer = MovieCommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save(movie_id=movie_id)
         return Response(serializer.data, status=status.HTTP_201_CREATED)

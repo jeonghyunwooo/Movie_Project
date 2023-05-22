@@ -30,6 +30,7 @@ export default {
         createComment(){
             const content = this.content
             const movie = this.$store.getters.movie_detail
+            console.log(movie.id)
             if (!content){
                 alert('제목 입력해주세요')
                 return
@@ -37,7 +38,10 @@ export default {
             axios({
                 method: 'post',
                 url:`${API_URL}/movies/${movie.id}/comments/`,
-                data: {content}
+                data: {content},
+                headers: {
+            Authorization: `Token ${this.$store.state.token}`
+        }
             })
             .then((res) => {
                 console.log(res)
