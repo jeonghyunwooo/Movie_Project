@@ -2,8 +2,7 @@
   <div class="image-container">
     <h3 id="Popular_word">실시간 인기 영화</h3>
     <swiper :options="swiperOptions" >
-      <!-- <swiper-slide v-for="p_movie in popular_movies" :key="p_movie.id" @click-slide="posterinfo"> -->
-      <swiper-slide v-for="p_movie in popular_movies" :key="p_movie.id">
+      <swiper-slide v-for="p_movie in popular_movies" :key="p_movie.name">
         <div class="slide-content" >
           <PopularListItem :p_movie="p_movie"/>
         </div>
@@ -34,15 +33,6 @@ export default {
     popular_movies() {
       return this.$store.getters.popular_movies
     },
-
-  methods:{
-    posterinfo(index,reallyIndex){
-      console.log(index,reallyIndex)
-    }
-  },
-
-    // swiper-slide 가 영화의 리스트를 늘려주어 진짜 영화값의 인덱스가 아니라 늘려버린 인덱스로 영화값이 나와 이것을 진짜 인덱스를 찾아 영화를 출력해야한다
-    // @click-slide="posterinfo"함수로 store에서 값을 찾는다
     
     swiperOptions() {
       return {
@@ -95,7 +85,7 @@ export default {
           }
         }
       }
-    }
+    },
   },
 }
 </script>

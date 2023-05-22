@@ -4,16 +4,31 @@
       <div class="nav_left">
         <router-link :to="{name: 'HomeView'}" id="movie_logo" >Movie Choice</router-link> 
         <router-link :to="{name: 'HomeView'}">Home</router-link>
-        <!-- <router-link :to="{name: 'ReviewView'}">Review</router-link> -->
         <router-link :to="{name: 'CommunityView'}">Community</router-link>
         <router-link :to="{name: 'MypageView'}">Mypage</router-link>
       </div>
       <div class="nav_right">
+        <span class="logout" @click="logout">Logout</span>
       </div>
     </nav>
     <router-view id="router"/>
   </div>
 </template>
+
+<script>
+import router from '@/router'
+export default {
+  methods:{ 
+    logout(){
+      this.$store.state.isLogin = false
+      this.$store.state.token = ''
+      if (router.currentRoute.name !== "LoginView") {
+        router.push({ name: "LoginView" })
+      }
+    }
+  }
+}
+</script>
 
 <style>
 #app {
@@ -62,5 +77,9 @@ nav a.router-link-exact-active {
 }
 body{
   background-color: black;
+}
+.logout{
+  color: white;
+  font-size: x-large
 }
 </style>

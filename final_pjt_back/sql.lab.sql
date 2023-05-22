@@ -1,1 +1,1 @@
-DROP TABLE movies_moviegenres
+DELETE FROM authtoken_token

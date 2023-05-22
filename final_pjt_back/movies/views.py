@@ -22,7 +22,7 @@ TMDB_GENRES_MOVIES=f'https://api.themoviedb.org/3/genre/movie/list?&api_key={api
 # TMDB/MOVIES/Details의 영화데이터 가져오기
 @api_view(['GET'])
 def save_total_movies(request):
-    nums = range(1,500)
+    nums = range(1,200)
     for num in nums:
         try:
             TMDB_MOVIES_VIDEOS_API = f'https://api.themoviedb.org/3/movie/{num}/videos?api_key={api_key}&language=ko-KR'

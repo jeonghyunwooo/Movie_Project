@@ -2,12 +2,12 @@
   <div class="image-container">
     <h3 id="Popular_word">최고 평점 영화</h3>
     <swiper :options="swiperOptions">
-      <swiper-slide v-for="t_movie in toprated_movies" :key="t_movie.id">
+      <swiper-slide v-for="t_movie in toprated_movies" :key="t_movie.name">
         <div class="slide-content">
           <TopratedListItem :t_movie="t_movie"/>
         </div>
       </swiper-slide>
-      <div class="swiper-button-next" slot="button-next"></div>
+      <div class="swiper-button-wnext" slot="button-next"></div>
       <div class="swiper-button-prev" slot="button-prev"></div>
     </swiper>
   </div>
@@ -26,14 +26,12 @@ export default {
     swiper,
     swiperSlide
   },
-  methods:{
-
-  },
   computed: {
     //영화목록(평점순) 전체 data
     toprated_movies() {
       return this.$store.getters.toprated_movies
     },
+
     swiperOptions() {
       return {
         slidesPerView: 9, // 화면 최대 크기일시 나타나는 이미지의 수

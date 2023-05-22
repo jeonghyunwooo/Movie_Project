@@ -35,7 +35,7 @@ export default {
         const payload = {
             username, password1, password2
         }
-        this.$store.dispatach('signUp',payload)
+        this.$store.dispatch('signUp',payload)
     }
   }
 }

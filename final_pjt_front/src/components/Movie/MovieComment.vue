@@ -25,11 +25,6 @@ export default {
             content: ''
         }
     },
-    computed : {
-    // comments(){
-    //         return this.$store.getters.comments
-    //     }
-    },
     methods:{
         // 각 영화에 대한 댓글 작성
         createComment(){
