@@ -1,38 +1,19 @@
 <template>
   <div class="home">
     <div><MainVideo/></div>
-    <hr>
-    <div class="Popular_list"><PopularList @PopualrList-HomeView="arriveHomeView"/></div>
-    <div class="Popular_list"><TopratedList @TopratedList-HomeView="arriveHomeView_t"/></div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="modal-dialog modal-dialog-scrollable">
-              {{getPopularMovieDetail}}
-              {{getTopratedMovieDetail}}
-            </div>
-              <MovieComments/>
-          </div>
-          <div class="modal-footer">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    <GenresChoice/>
+    <div class="Popular_list"><PopularList/></div>
+    <div class="Popular_list"><TopratedList/></div> 
+    <MovieDetail/>      
+  </div>      
 </template>
 
 <script>
 import MainVideo from '@/components/Movie/MainVideo'
 import PopularList from '@/components/Movie/PopularList'
 import TopratedList from '@/components/Movie/TopratedList'
-import MovieComments from '@/components/Movie/MovieComments'
+import MovieDetail from '@/components/Movie/MovieDetail'
+import GenresChoice from '@/components/Movie/GenresChoice'
 
 export default {
   name: 'HomeView',
@@ -40,40 +21,39 @@ export default {
     MainVideo,
     PopularList,
     TopratedList,
-    MovieComments,
+    MovieDetail,
+    GenresChoice,
   },
-  data: function(){
-    return{
-      getPopularMovieDetail : '',
-      getTopratedMovieDetail:'',
-    }
-  },
+
   created() {
     // this.getMainVideo()
-    this.getPopularMovies()
-    this.getTopratedMovies()
+    this.getTotalMovies() // 영화목록 전체 data 생성
+    this.getPopularMovies() // 영화목록(인기) 전체 data생성
+    this.getTopratedMovies() // 영화목록(평전순) 전체 data생성
+  },
+
+  // store의 getters에서 재정의한 변수를 가져온다.
+  computed : {
   },
   
   methods:{
+    // 영화목록(인기) 전체 조회
+    getTotalMovies() {
+      this.$store.dispatch('getTotalMovies')
+    },
+    // 영화목록(인기) 전체 조회
+    getPopularMovies() {
+      this.$store.dispatch('getPopularMovies')
+    },
+    // 영화목록(평점순) 전체 조회
+    getTopratedMovies() {
+      this.$store.dispatch('getTopratedMovies')
+    },
+
     // mainVideo는 유튜브 영상 예고편
     // getMainVideo() {
       // this.$store.dispatch('getMainVideo')
     // },
-    getPopularMovies() {
-      this.$store.dispatch('getPopularMovies')
-    },
-    getTopratedMovies() {
-      this.$store.dispatch('getTopratedMovies')
-    },
-    arriveHomeView(input) {
-      this.getPopularMovieDetail = input
-      this.getTopratedMovieDetail = ''
-    },
-    arriveHomeView_t(input) {
-      this.getTopratedMovieDetail = input
-      this.getPopularMovieDetail = ''
-
-    }
   }
 }
 </script>

@@ -4,12 +4,16 @@ import router from '@/router'
 const API_URL = 'http://127.0.0.1:8000'
 
 export default{
+  //==========================state==============================
   state: {
     reviews: [],
   },
+  //==========================getters============================
   getters: {
     reviews : (state) => state.reviews,
   },
+
+  //=========================mutations===========================
   mutations: {
     CREATE_REVIEW() {
       router.push({name:"ReviewView"})
@@ -18,7 +22,10 @@ export default{
       state.reviews = reviews
     }
   },
+
+  //=========================actions=============================
   actions: {
+    // 리뷰 작성
     createReview(context, payload){
       const title = payload.title
       const movie = payload.movie
@@ -39,6 +46,7 @@ export default{
         method: 'post',
         url:`${API_URL}/communitys/reviews/`,
         data:{title, movie, content},
+
       })
       .then(() => {
         context.commit('CREATE_REVIEW')
@@ -47,6 +55,8 @@ export default{
         console.log(err)
       })
     },
+
+    // 리뷰data 가져오기
     getReviews(context) {
       axios({
         method: 'get',
@@ -54,10 +64,14 @@ export default{
       })
         .then((res) => {
           context.commit('GET_REVIEWS',res.data)
-        })
-        .catch((err) => {
-          console.log(err)
       })
+        .catch((error) => {
+          if (error.response && error.response.data) {
+            console.log(error.response.data);
+          } else {
+            console.log(error);
+          }
+      });
     }
   }
 }

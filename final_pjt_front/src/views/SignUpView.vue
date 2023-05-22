@@ -26,18 +26,18 @@ export default {
         password2:'',
     }
   },
-//   methods:{
-//     signUp(){
-//         const username = this.username
-//         const password1 = this.password1
-//         const password2 = this.password2
+  methods:{
+    signUp(){
+        const username = this.username
+        const password1 = this.password1
+        const password2 = this.password2
 
-//         const payload = {
-//             username, password1, password2
-//         }
-//         this.$store.dispatach('signUp',payload)
-//     }
-//   }
+        const payload = {
+            username, password1, password2
+        }
+        this.$store.dispatach('signUp',payload)
+    }
+  }
 }
 </script>
 

@@ -4,7 +4,7 @@
     <swiper :options="swiperOptions">
       <swiper-slide v-for="t_movie in toprated_movies" :key="t_movie.id">
         <div class="slide-content">
-          <TopratedListItem :t_movie="t_movie" @TopratedListItem_TopratedList="TopratedListToHomeView"/>
+          <TopratedListItem :t_movie="t_movie"/>
         </div>
       </swiper-slide>
       <div class="swiper-button-next" slot="button-next"></div>
@@ -26,18 +26,11 @@ export default {
     swiper,
     swiperSlide
   },
-  data(){
-    return{
-      getTopratedMovieDetail:'',
-    }
-  },
   methods:{
-    TopratedListToHomeView(input){
-      this.getTopratedMovieDetail = input
-      this.$emit('TopratedList-HomeView',this.getTopratedMovieDetail)
-    }
+
   },
   computed: {
+    //영화목록(평점순) 전체 data
     toprated_movies() {
       return this.$store.getters.toprated_movies
     },

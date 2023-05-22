@@ -1,10 +1,8 @@
 <template>
   <div>
     <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-      <img @click="PopularListItemToPopularList" class="Popular_img" :src="poster_path" style="width: 140px; height: 190px;" alt="">
-      <!-- <img class="Popular_img" :src="poster_path" style="width: 140px; height: 190px;" alt=""> -->
+      <img @click="getMovieDetail" class="Popular_img" :src="poster_path" style="width: 140px; height: 190px;" alt="">
     </a>
-
   </div>
 </template>
 
@@ -13,17 +11,20 @@ const make_img_URL = 'https://image.tmdb.org/t/p/w500'
 
 export default {
   name: 'PopularListItem',
+  props: {
+    p_movie: Object,//영화목록(인기) 한개 data
+  },
   data() {
     return {
       poster_path:make_img_URL + this.p_movie.poster_path,
     }
   },
-  props: {
-    p_movie: Object,
-  },
+  
+
   methods: {
-    PopularListItemToPopularList:function(){
-      this.$emit("PopularListItem_PopularList",this.p_movie)
+    // 영화목록 세부 조회
+    getMovieDetail(){
+      this.$store.dispatch('getMovieDetail',this.p_movie)
     }
   },
   watch: {

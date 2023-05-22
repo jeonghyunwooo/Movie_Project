@@ -5,7 +5,7 @@
       <!-- <swiper-slide v-for="p_movie in popular_movies" :key="p_movie.id" @click-slide="posterinfo"> -->
       <swiper-slide v-for="p_movie in popular_movies" :key="p_movie.id">
         <div class="slide-content" >
-          <PopularListItem :p_movie="p_movie" @PopularListItem_PopularList="PopularListToHomeView"></PopularListItem>
+          <PopularListItem :p_movie="p_movie"/>
         </div>
       </swiper-slide>
       <div class="swiper-button-next" slot="button-next"></div>
@@ -27,24 +27,19 @@ export default {
     swiper,
     swiperSlide
   },
-  data : function(){
-    return{
-      getPopularMovieDetail:'',
-    }
-  },
-  methods:{
-    PopularListToHomeView(input){
-      this.getPopularMovieDetail = input
-      this.$emit('PopualrList-HomeView',this.getPopularMovieDetail)
+
+  // store의 getters에서 재정의한 변수를 가져온다.
+  computed: {
+    //영화목록(인기) 전체 data
+    popular_movies() {
+      return this.$store.getters.popular_movies
     },
+
+  methods:{
     posterinfo(index,reallyIndex){
       console.log(index,reallyIndex)
     }
   },
-  computed: {
-    popular_movies() {
-      return this.$store.getters.popular_movies
-    },
 
     // swiper-slide 가 영화의 리스트를 늘려주어 진짜 영화값의 인덱스가 아니라 늘려버린 인덱스로 영화값이 나와 이것을 진짜 인덱스를 찾아 영화를 출력해야한다
     // @click-slide="posterinfo"함수로 store에서 값을 찾는다

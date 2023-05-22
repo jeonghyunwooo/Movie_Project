@@ -1,13 +1,10 @@
 <template>
   <div class="main_home">
-      <video class="main_video" :src="main_video_URL" type="video/mp4" autoplay muted loop >
-      </video>
+      <video class="main_video" :src="main_video_URL" type="video/mp4" autoplay muted loop></video>
       <div class="main_words">
-        <h1>The Movie Choice</h1>
-        <br>
+        <h1>The Movie Choice</h1><br>
         <h4>나만의 영화관을 만들어 보세요</h4>
       </div>
-  
   </div>
 </template>
 

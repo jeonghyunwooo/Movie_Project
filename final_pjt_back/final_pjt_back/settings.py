@@ -5,17 +5,12 @@ from pathlib import Path
 # .env 파일 로드
 load_dotenv()
 
-
 # API 키 가져오기
 API_KEY = os.getenv('API_KEY')
-TMDB_POPULAR_API = os.getenv('TMDB_POPULAR_API')
-TMDB_TOP_RATED_API = os.getenv('TMDB_TOP_RATED_API')
 
 # 환경 설정에 API 키 추가
 API_SETTINGS = {
     'API_KEY': API_KEY,
-    'TMDB_POPULAR_API': TMDB_POPULAR_API,
-    'TMDB_TOP_RATED_API': TMDB_TOP_RATED_API,
 }
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'movies',
     'communitys',
+    'accounts',
     'rest_framework',
     'corsheaders',
 
@@ -143,3 +139,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'accounts.User'

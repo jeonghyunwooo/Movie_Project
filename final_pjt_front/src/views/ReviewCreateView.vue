@@ -28,7 +28,7 @@ export default {
       const title = this.title
       const movie = this.movie
       const content = this.content
-
+      
       const payload = {
         title, movie, content
       }
