@@ -12,8 +12,6 @@
 
 <script>
 import MovieCommentList from '@/components/Movie/MovieCommentList'
-import axios from 'axios'
-const API_URL = 'http://127.0.0.1:8000'
 
 export default {
     name:"MovieComment",
@@ -28,28 +26,15 @@ export default {
     methods:{
         // 각 영화에 대한 댓글 작성
         createComment(){
-            const content = this.content
             const movie = this.$store.getters.movie_detail
-            console.log(movie.id)
-            if (!content){
-                alert('제목 입력해주세요')
-                return
+            const content = this.content
+
+            const payload = {
+                movie, content,
             }
-            axios({
-                method: 'post',
-                url:`${API_URL}/movies/${movie.id}/comments/`,
-                data: {content},
-                headers: {
-            Authorization: `Token ${this.$store.state.token}`
-        }
-            })
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+            this.$store.dispatch('createComment',payload) 
         },
+
         deleteComment(id){
             this.$store.commit('DELETE_COMMENT', id)
         }

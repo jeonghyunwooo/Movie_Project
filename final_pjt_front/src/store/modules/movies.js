@@ -149,6 +149,31 @@ export default{
       context.commit('GENRE_CHOICE',genre_movies)
     },
 
+    // 개별 영화에 댓글 생성
+    createComment(context, payload){
+      const movie = payload.movie
+      const content = payload.content
+
+      if (!content){
+        alert('제목 입력해주세요')
+        return
+      }
+      axios({
+          method: 'post',
+          url:`http://127.0.0.1:8000/movies/${movie.id}/comments/`,
+          data: {content},
+          headers: {
+          Authorization: `Token ${context.rootState.token}`
+          }
+      })
+      .then((res) => {
+          console.log(res)
+      })
+      .catch((err) => {
+          console.log(err)
+      })
+    },
+
     // youtube 영화 예고편
     getYoutubeVideo(){
       axios({
