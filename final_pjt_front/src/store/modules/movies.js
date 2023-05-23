@@ -114,7 +114,6 @@ export default{
     // 장르별 영화 조회
     GENRE_CHOICE(state,genre){
       state.genre_movies = state[genre]
-      console.log(state[genre])
     },
 
     GET_COMMENTS(state, commentfilter) {
