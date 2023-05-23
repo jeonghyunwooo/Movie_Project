@@ -24,8 +24,11 @@ export default {
         }
     },
 
-    created() {
-        this.getComments()
+    computed : {
+    // 영화목록 세부 data
+    movie_datail() {
+            return this.$store.getters.movie_detail
+        },
     },
     methods:{
         // 각 영화에 대한 댓글 작성
@@ -39,9 +42,10 @@ export default {
         },
 
         // 모든 댓글 가져와서 해당 개시글의 댓글로 처리
-        getComments(){
+        getComments(movie_datail){
             const movie = this.$store.getters.movie_detail
-            this.$store.dispatch('getComments',movie)
+            console.log(movie)
+            this.$store.dispatch('getComments',movie_datail)
 
         },
 

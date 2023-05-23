@@ -1,6 +1,14 @@
 <template>
   <div class="home">
-    <div><MainVideo/></div>
+    <div class="MainVideo"><MainVideo/></div> 
+    <div class="film" data-aos="fade-left">
+      <h2 ><b>Go to Movie PlayList</b></h2>
+      <h5><b>Click!</b></h5>
+      <router-link :to="{name: 'PlayListView'}">
+      <img src="../assets/moviefilm.png" alt="">
+      </router-link>
+      <p>다른 유저들의 특색있는 PlayList를 감상해보세요</p>
+    </div>
     <GenresChoice/>
     <div class="Popular_list"><PopularList/></div>
     <div class="Popular_list"><TopratedList/></div> 
@@ -30,6 +38,7 @@ export default {
     this.getTotalMovies() // 영화목록 전체 data 생성
     this.getPopularMovies() // 영화목록(인기) 전체 data생성
     this.getTopratedMovies() // 영화목록(평전순) 전체 data생성
+    this.getMoviesByGenres() // 장르별 영화 목록 data생성
   },
 
   // store의 getters에서 재정의한 변수를 가져온다.
@@ -49,6 +58,12 @@ export default {
     getTopratedMovies() {
       this.$store.dispatch('getTopratedMovies')
     },
+    // 장르별 영화 목록 data조회
+    getMoviesByGenres() {
+      this.$store.dispatch('getMoviesByGenres')
+    },
+
+
 
     // mainVideo는 유튜브 영상 예고편
     // getMainVideo() {
@@ -64,4 +79,40 @@ export default {
   margin-right: 4%;
   margin-bottom: 0px;
 }
+
+.film{
+  /* position: absolute; */
+  border: 1px solid white;
+  border-radius: 40px;
+  background-color: white;
+  margin : auto;
+  width: 600px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  height: 250px;
+}
+
+.film a{
+text-decoration: none;
+}
+
+.film img{
+  width: 220px;
+  height: 110px;
+}
+
+.film h2{
+  font-family: 'Kaisei Opti', sans-serif;
+  margin-top:15px;
+}
+
+.film h5{
+  font-family: 'Roboto', sans-serif;
+}
+
+.film p{
+  font-family: 'Roboto', sans-serif;
+  margin-top:6px;
+  color : grey
+}
+
 </style>

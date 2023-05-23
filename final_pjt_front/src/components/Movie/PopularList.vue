@@ -2,7 +2,7 @@
   <div class="image-container">
     <h3 id="Popular_word">실시간 인기 영화</h3>
     <swiper :options="swiperOptions" >
-      <swiper-slide v-for="p_movie in total_moives" :key="p_movie.name">
+      <swiper-slide v-for="p_movie in genre_movies" :key="p_movie.name">
         <div class="slide-content" >
           <PopularListItem :p_movie="p_movie"/>
         </div>
@@ -26,6 +26,11 @@ export default {
     swiper,
     swiperSlide
   },
+  // data () {
+  //   return{ 
+  //     genre_movies : null
+  //   }
+  // },
   
   // store의 getters에서 재정의한 변수를 가져온다.
   computed: {
@@ -36,7 +41,7 @@ export default {
 
     // 영화목록 전체 data 
     total_moives() {
-      return this.$store.getters.total_moives
+      return this.$store.getters.total_movies
     },
 
     // 영화목록 전체 data 장르별 조회

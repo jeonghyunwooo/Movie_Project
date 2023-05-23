@@ -25,4 +25,4 @@ class MovieCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = MovieComment
         fields  = '__all__'
-        read_only_fields = ('movie_id',)
+        read_only_fields = ('movie',)

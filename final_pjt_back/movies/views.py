@@ -12,9 +12,9 @@ import json
 import requests
 import pprint
 
-# api_key = API_SETTINGS['API_KEY']
 api_key = '3e522bb11d9503474e85e9a710de1de4'
 TMDB_MOVIES_POPULAR_API= f'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&sort_by=popularity.desc&api_key={api_key}&language=ko-KR'
+
 TMDB_MOVIES_TOP_RATED_API= f'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&sort_by=vote_average.desc&without_genres=99,10755&vote_count.gte=200&api_key={api_key}&language=ko-KR'
 
 TMDB_GENRES_MOVIES=f'https://api.themoviedb.org/3/genre/movie/list?&api_key={api_key}&language=ko-KR'
@@ -22,7 +22,7 @@ TMDB_GENRES_MOVIES=f'https://api.themoviedb.org/3/genre/movie/list?&api_key={api
 # TMDB/MOVIES/Details의 영화데이터 가져오기
 @api_view(['GET'])
 def save_total_movies(request):
-    nums = range(1,200)
+    nums = range(1,700)
     for num in nums:
         try:
             TMDB_MOVIES_VIDEOS_API = f'https://api.themoviedb.org/3/movie/{num}/videos?api_key={api_key}&language=ko-KR'
@@ -122,12 +122,13 @@ def save_movie_genres(request):
 # 각 영화에 대한 댓글 작성
 @api_view(['POST'])
 def comment_create(request, movie_id):
-    movie_id = get_object_or_404(TotalMovies, pk=movie_id)
+    movie = get_object_or_404(TotalMovies, pk=movie_id)
     serializer = MovieCommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        serializer.save(movie_id=movie_id)
+        serializer.save(movie=movie)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
+# 모든 댓글 요청(각 영화의 댓글은 front에서 처리)    
 @api_view(['GET'])
 def comment_list(request):
     if request.method == 'GET':

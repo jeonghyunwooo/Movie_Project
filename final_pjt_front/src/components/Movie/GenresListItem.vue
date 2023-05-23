@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span>{{genre_movie.title}}</span>
+    <!-- <span>{{genre_movie.title}}</span> -->
   </div>
 </template>
 

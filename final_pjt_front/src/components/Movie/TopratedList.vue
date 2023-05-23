@@ -2,7 +2,7 @@
   <div class="image-container">
     <h3 id="Popular_word">최고 평점 영화</h3>
     <swiper :options="swiperOptions">
-      <swiper-slide v-for="t_movie in total_moives" :key="t_movie.name">
+      <swiper-slide v-for="t_movie in genre_movies" :key="t_movie.name">
         <div class="slide-content">
           <TopratedListItem :t_movie="t_movie"/>
         </div>
@@ -36,7 +36,7 @@ export default {
 
     // 영화목록 전체 data 
     total_moives() {
-      return this.$store.getters.total_moives
+      return this.$store.getters.total_movies
     },
     
     // 영화목록 전체 data 장르별 조회

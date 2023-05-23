@@ -49,7 +49,7 @@ class MovieGenres(models.Model):
 
 # 각 영화에 대한 댓글 테이블
 class MovieComment(models.Model):
-    movie_id = models.ForeignKey(TotalMovies, on_delete=models.CASCADE)
+    movie = models.ForeignKey(TotalMovies, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
