@@ -26,6 +26,8 @@ export default {
     swiper,
     swiperSlide
   },
+
+  // store의 getters에서 재정의한 변수를 가져온다.
   computed: {
     //영화목록(평점순) 전체 data
     toprated_movies() {
@@ -36,17 +38,22 @@ export default {
     total_moives() {
       return this.$store.getters.total_moives
     },
+    
+    // 영화목록 전체 data 장르별 조회
+    genre_movies() {
+      return this.$store.getters.genre_movies
+    },
 
     swiperOptions() {
       return {
         slidesPerView: 9, // 화면 최대 크기일시 나타나는 이미지의 수
         // slidesPerGroup: 9,  // 버튼 클릭 시 이동하는 이미지의 수 
         spaceBetween: 20,
-        autoplay: {
-          delay: 3000,
-          disableOnInteraction: false
-        },
-        loop: true, // 데이터가 끝까지 다읽으면 처음으로 돌아옴
+        // autoplay: {
+        //   delay: 3000,
+        //   disableOnInteraction: false
+        // },
+        // loop: true, // 데이터가 끝까지 다읽으면 처음으로 돌아옴
         navigation: { // swiper, swiperSlide 에서 재공하는 기능 (버튼)
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'

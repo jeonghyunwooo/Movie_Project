@@ -20,4 +20,7 @@ urlpatterns = [
 
     # 각 영화에 대한 댓글 작성
     path('<int:movie_id>/comments/', views.comment_create),
+
+    # 모든 댓글 data 가져오기
+    path('comments/', views.comment_list)
 ]

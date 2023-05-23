@@ -16,15 +16,18 @@
 
 <script>
 import GenresList from '@/components/Movie/GenresList'
+
 export default {
   name: 'GenresChoice',
   components:{
     GenresList,
   },
+  
   methods:{
     // 장르별 영화 조회
     genreChoice(genre){
       this.$store.dispatch('genreChoice',genre)
+      this.$store.coomit('GENRE_CHOICE',genre)
     }
   }
 }

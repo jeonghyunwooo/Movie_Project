@@ -31,7 +31,7 @@ export default {
     p_movie: {
       deep: true,
       handler(newVal) {
-        console.log(newVal)
+        // console.log(newVal)
         this.poster_path = make_img_URL + newVal.poster_path
       }
     }

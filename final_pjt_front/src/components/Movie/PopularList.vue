@@ -26,7 +26,7 @@ export default {
     swiper,
     swiperSlide
   },
-
+  
   // store의 getters에서 재정의한 변수를 가져온다.
   computed: {
     // 영화목록(인기) 전체 data
@@ -39,15 +39,20 @@ export default {
       return this.$store.getters.total_moives
     },
 
+    // 영화목록 전체 data 장르별 조회
+    genre_movies() {
+      return this.$store.getters.genre_movies
+    },
+
     swiperOptions() {
       return {
         slidesPerView: 9,
         // slidesPerGroup: 9,
         spaceBetween: 20,
-        autoplay: {
-          delay: 3000,
-          disableOnInteraction: false
-        },
+        // autoplay: {
+        //   delay: 3000,
+        //   disableOnInteraction: false
+        // },
         loop: true, // 데이터가 끝까지 다읽으면 처음으로 돌아옴
         navigation: {
           nextEl: '.swiper-button-next',

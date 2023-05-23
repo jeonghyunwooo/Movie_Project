@@ -127,3 +127,10 @@ def comment_create(request, movie_id):
     if serializer.is_valid(raise_exception=True):
         serializer.save(movie_id=movie_id)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+@api_view(['GET'])
+def comment_list(request):
+    if request.method == 'GET':
+        comments = get_list_or_404(MovieComment)
+        serializer = MovieCommentSerializer(comments, many=True)
+        return Response(serializer.data)

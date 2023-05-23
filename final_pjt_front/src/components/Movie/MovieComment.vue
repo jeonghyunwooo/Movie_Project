@@ -23,16 +23,26 @@ export default {
             content: ''
         }
     },
+
+    created() {
+        this.getComments()
+    },
     methods:{
         // 각 영화에 대한 댓글 작성
         createComment(){
             const movie = this.$store.getters.movie_detail
             const content = this.content
-
             const payload = {
                 movie, content,
             }
             this.$store.dispatch('createComment',payload) 
+        },
+
+        // 모든 댓글 가져와서 해당 개시글의 댓글로 처리
+        getComments(){
+            const movie = this.$store.getters.movie_detail
+            this.$store.dispatch('getComments',movie)
+
         },
 
         deleteComment(id){

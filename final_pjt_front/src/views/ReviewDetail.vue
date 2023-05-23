@@ -26,7 +26,6 @@ export default {
     },
     methods:{
         getReviewDetail(){
-            console.log(this.$route.params)
             axios({
                 method:'get',
                 url:`${API_URL}/communitys/reviews/${this.$route.params.id}/`,
