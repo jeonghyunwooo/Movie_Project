@@ -22,7 +22,9 @@ class TopRatedMoviesSerializer(serializers.ModelSerializer):
 
 # 각 영화에 대한 댓글
 class MovieCommentSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+    
     class Meta:
         model = MovieComment
         fields  = '__all__'
-        read_only_fields = ('movie',)
+        read_only_fields = ('movie','user')

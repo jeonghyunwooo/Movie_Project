@@ -18,18 +18,6 @@ export default{
     genre_movies : [], // 장르별 영화 목록
     comments : [],
     youtube_video : null,
-
-    // 영화를 장르별로 분류
-    모험 : [],
-    판타지 : [],
-    애니메이션 : [],
-    공포 : [],
-    액션 : [],
-    코미디 : [],
-    스릴러 : [],
-    범죄 : [],
-    로맨스 : [],
-    SF : [],
   },
 
   //===========================getters==============================
@@ -42,18 +30,6 @@ export default{
     genre_movies:(state) => state.genre_movies,
     comments:(state) => state.comments,
     genre:(state) => state.genre,
-
-    // 영화를 장르별로 분류
-    모험:(state) => state.모험,
-    판타지:(state) => state.판타지,
-    애니메이션:(state) => state.애니메이션,
-    공포:(state) => state.공포,
-    액션:(state) => state.액션,
-    코미디:(state) => state.코미디,
-    스릴러:(state) => state.스릴러,
-    범죄:(state) => state.범죄,
-    로맨스:(state) => state.로맨스,
-    SF:(state) => state.SF,
   },
   
   //===========================mutations==============================
@@ -65,46 +41,20 @@ export default{
 
     // 영화목록(인기) 전체 조회
     GET_POPULAR_MOVIES(state,movies){
-      movies.forEach(elem => {
-        state.popular_movies.push(elem)
-      })
+      state.popular_movies = movies
     },
 
     // 영화목록(평점순) 전체 조회
     GET_TOP_RATED_MOVIES(state,movies){
-      movies.forEach(elem => {
-        state.toprated_movies.push(elem)
-      })
+      state.toprated_movies = movies
     },
 
     // 영화목록 세부 조회
     GET_MOVIE_DETAIL(state, movie){
       state.movie_detail = movie
     },
-    
-  
-    // 장르별 영화 목록 생성
-    GET_MOVIES_BY_GENRES(state, movies_by_genresList){
-      state.모험 = movies_by_genresList.모험
-      state.판타지 = movies_by_genresList.판타지
-      state.애니메이션 = movies_by_genresList.애니메이션
-      state.공포 = movies_by_genresList.공포
-      state.액션 = movies_by_genresList.액션
-      state.코미디 = movies_by_genresList.코미디
-      state.스릴러 = movies_by_genresList.스릴러
-      state.범죄 = movies_by_genresList.범죄
-      state.로맨스 = movies_by_genresList.로맨스
-      state.SF = movies_by_genresList.SF
-    },
 
-    // 장르별 영화 조회
-    GENRE_CHOICE(state,genre){
-      state.genre_movies = []
-      state.genre_movies = state[genre]
-      console.log(state.genre_movies)
-    },
-    
-
+    // 댓글data 가져오기    
     GET_COMMENTS(state, commentfilter) {
       state.comments = commentfilter
     },
@@ -114,7 +64,6 @@ export default{
       state.youtube_video = video
     },
   },
-  
   
   //===========================actions==============================
   actions: {
@@ -151,8 +100,8 @@ export default{
     // 영화목록(평점순) 전체 조회
     getTopratedMovies(context){
       axios({
-        url:'http://127.0.0.1:8000/movies/top_rated_movies/',
         method:'get',
+        url:'http://127.0.0.1:8000/movies/top_rated_movies/',
       })
       .then(res =>
         // console.log(res.data) 
@@ -165,23 +114,10 @@ export default{
 
     // 영화목록 세부 조회
     getMovieDetail(context, movie){
-      console.log(movie)
       context.commit('GET_MOVIE_DETAIL', movie)
     },
 
-    // // 장르별 영화 조회
-    // genreChoice(context, genre){
-    //   const genre_movies = []
-    //   const movies = this.state.movies.total_movies
-    //   for(let i = 0; i < movies.length; i++){
-    //     if(movies[i].genres.includes(genre)===true)
-    //       genre_movies.push(movies[i])
-    //   }
-    //   context.commit('GENRE_CHOICE',genre_movies)
-
-    // },
-
-    // 개별 영화에 댓글 생성
+    // 개별 영화에 댓글 생성 
     createComment(context, payload){
       const movie = payload.movie
       const content = payload.content
@@ -198,9 +134,9 @@ export default{
           Authorization: `Token ${context.rootState.token}`
           }
       })
-      .then((res) => {
+      .then(() => {
           // context.commit('CREATE_COMMENT',res.data)
-          console.log(res)
+          // console.log(res)
 
       })
       .catch((err) => {
@@ -221,7 +157,7 @@ export default{
           const commentList = res.data
           const commentfilter = []
           for (let i = 0; i < commentList.length; i++) {
-            if (commentList[i].movie=== movie.movie_id) {
+            if (commentList[i].movie===movie) {
               commentfilter.push(commentList[i])
             }
           }
@@ -230,37 +166,6 @@ export default{
         .catch((err) => {
         console.log(err)
       })
-    },
-
-    // 장르별 영화 목록 생성
-    getMoviesByGenres(context){
-      const total_movies = context.getters.total_movies
-      var movies_by_genresList = {
-        모험 : [],
-        판타지 : [],
-        애니메이션 : [],
-        공포 : [],
-        액션 : [],
-        코미디 : [],
-        스릴러 : [],
-        범죄 : [],
-        로맨스 : [],
-        SF : [],
-      }
-
-      for (let i = 0; i < total_movies.length; i++){
-        if(total_movies[i]){
-          var genres = total_movies[i].genres;
-          var genre = genres.substr(2,genres.length-4);
-          var genre_list = genre.split("', '");
-          for(const genre of genre_list){
-            if(movies_by_genresList[genre]){
-              movies_by_genresList[genre].push(total_movies[i]);
-            }
-          }
-        }
-      }
-      context.commit('GET_MOVIES_BY_GENRES',movies_by_genresList)
     },
 
     // youtube 영화 예고편

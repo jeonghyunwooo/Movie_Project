@@ -43,15 +43,14 @@ const routes = [
         name: 'PlayListView',
         component: PlayListView
       },
+      {
+        path: '/ReviewCreateView',
+        name: 'ReviewCreateView',
+        component: ReviewCreateView
+      },
     ]
   },
   
-  {
-    path: '/ReviewCreateView',
-    name: 'ReviewCreateView',
-    component: ReviewCreateView
-  },
-
   {
     path: '/:id',
     name: 'ReviewDetail',

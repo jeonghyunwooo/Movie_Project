@@ -19,10 +19,10 @@ TMDB_MOVIES_TOP_RATED_API= f'https://api.themoviedb.org/3/discover/movie?include
 
 TMDB_GENRES_MOVIES=f'https://api.themoviedb.org/3/genre/movie/list?&api_key={api_key}&language=ko-KR'
 
-# TMDB/MOVIES/Details의 영화데이터 가져오기
+# TMDB/MOVIES/Details의 영화데이터 DB저장
 @api_view(['GET'])
 def save_total_movies(request):
-    nums = range(1,700)
+    nums = range(1,100)
     for num in nums:
         try:
             TMDB_MOVIES_VIDEOS_API = f'https://api.themoviedb.org/3/movie/{num}/videos?api_key={api_key}&language=ko-KR'
@@ -79,6 +79,63 @@ def save_total_movies(request):
             pass
     return JsonResponse(data)
 
+
+# TMDB/MOVIES/Popular의 영화데이터 DB저장
+@api_view(['GET'])
+def save_popular_movies(request):
+    response = requests.get(TMDB_MOVIES_POPULAR_API,params={'page' : 1,}).json()
+    genre_kind = MovieGenres.objects.all()
+    genre_dict = {}
+    for genre in genre_kind:
+        genre_dict[genre.id]=genre.name
+
+    for movie_dict in response['results']:
+        genres = []
+        for genre in movie_dict['genre_ids']:
+            genres.append(genre_dict[genre])
+        
+        PopularMovies.objects.create(
+            title = movie_dict.get('title'),
+            movie_id = movie_dict.get('id'),
+            genres = genres,
+            release_date = movie_dict.get('release_date'),
+            popularity = movie_dict.get('popularity'),
+            vote_average = movie_dict.get('vote_average'),
+            adult = movie_dict.get('adult'),
+            poster_path = movie_dict.get('poster_path'),
+            overview = movie_dict.get('overview')
+        )
+    return JsonResponse(response)
+        
+
+# TMDB/MOVIES/Top_rated의 영화데이터 DB저장
+@api_view(['GET'])
+def save_top_rated_movies(request):
+    response = requests.get(TMDB_MOVIES_TOP_RATED_API,params={'page' : 1,}).json()
+    genre_kind = MovieGenres.objects.all()
+    genre_dict = {}
+    for genre in genre_kind:
+        genre_dict[genre.id]=genre.name
+
+    for movie_dict in response['results']:
+        genres = []
+        for genre in movie_dict['genre_ids']:
+            genres.append(genre_dict[genre])
+        
+        TopRatedMovies.objects.create(
+            title = movie_dict.get('title'),
+            movie_id = movie_dict.get('id'),
+            genres = genres,
+            release_date = movie_dict.get('release_date'),
+            popularity = movie_dict.get('popularity'),
+            vote_average = movie_dict.get('vote_average'),
+            adult = movie_dict.get('adult'),
+            poster_path = movie_dict.get('poster_path'),
+            overview = movie_dict.get('overview')
+        )
+    return JsonResponse(response)
+
+
 # DB의 전체 영화데이터 가져오기
 @api_view(['GET'])
 def get_total_movies(request):
@@ -86,9 +143,26 @@ def get_total_movies(request):
     serializer = TotalMoviesSerializer(movies, many=True)
     return Response(serializer.data)
 
-# TMDB/MOVIES/Popular의 영화데이터 가져오기
+
+# DB의 Popular의 영화데이터 가져오기
 @api_view(['GET'])
 def get_popular_movies(request):
+    movies = get_list_or_404(PopularMovies)
+    serializer = PopularMoviesSerializer(movies, many=True)
+    return Response(serializer.data)
+
+
+# DB의 Top_rated의 영화데이터 가져오기
+@api_view(['GET'])
+def get_top_rated_movies(request):
+    movies = get_list_or_404(TopRatedMovies)
+    serializer = TopRatedMoviesSerializer(movies, many=True)
+    return Response(serializer.data)
+
+
+# TMDB/MOVIES/Popular의 영화데이터 가져오기
+@api_view(['GET'])
+def get_tmdb_popular_movies(request):
     movie_data = []
     for i in range(1,2):
         response = requests.get(TMDB_MOVIES_POPULAR_API,params={'page' : i,}).json()
@@ -97,9 +171,10 @@ def get_popular_movies(request):
         movie_data.extend(serializer.data)    
     return Response(movie_data)
 
+
 # TMDB/MOVIES/Top_rated의 영화데이터 가져오기
 @api_view(['GET'])
-def get_top_rated_movies(request):
+def get_tmdb_top_rated_movies(request):
     movie_data = []
     for i in range(1,2):
         response = requests.get(TMDB_MOVIES_TOP_RATED_API,params={'page' : i,}).json()
@@ -107,6 +182,7 @@ def get_top_rated_movies(request):
         serializer = TopRatedMoviesSerializer(topratedmovies,many=True) 
         movie_data.extend(serializer.data)    
     return Response(movie_data)
+
 
 # TMDB/GENRES/Movie의 영화 장르 데이터 가져오기
 def save_movie_genres(request):
@@ -119,15 +195,17 @@ def save_movie_genres(request):
         )
     return JsonResponse(response)
 
+
 # 각 영화에 대한 댓글 작성
 @api_view(['POST'])
 def comment_create(request, movie_id):
     movie = get_object_or_404(TotalMovies, pk=movie_id)
     serializer = MovieCommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        serializer.save(movie=movie)
+        serializer.save(movie=movie,user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
+
 # 모든 댓글 요청(각 영화의 댓글은 front에서 처리)    
 @api_view(['GET'])
 def comment_list(request):
@@ -135,3 +213,23 @@ def comment_list(request):
         comments = get_list_or_404(MovieComment)
         serializer = MovieCommentSerializer(comments, many=True)
         return Response(serializer.data)
+    
+
+# 특정 장르의 영화 가져오기
+@api_view(['GET'])
+def genres_movies(request, genre):
+    total_movie = TotalMovies.objects.all()
+    genre_movies = []
+    print(total_movie)
+    for movie in total_movie:
+        genres = movie.genres
+        genre_lst = genres[2:len(genres)-2].split("', '")
+
+        for movie_genre in genre_lst:
+            if movie_genre == genre : 
+                genre_movies.append(movie)
+    serializer = TotalMoviesSerializer(genre_movies, many=True) 
+    return Response(serializer.data)
+
+
+

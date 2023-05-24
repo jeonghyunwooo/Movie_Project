@@ -1,7 +1,7 @@
 <template>
   <div>
     <GenresListItem 
-    v-for="genre_movie in genre_movies"
+    v-for="genre_movie in movies_by_genre"
     :key = "genre_movie.id"
     :genre_movie="genre_movie"
     />
@@ -14,6 +14,9 @@ export default {
   name: 'GenresList',
   components:{
     GenresListItem,
+  },
+  props:{
+    movies_by_genre: Array
   },
   computed:{
     genre_movies() {

@@ -1,1 +1,1 @@
-DELETE FROM authtoken_token
+DELETE FROM movies_popularmovies

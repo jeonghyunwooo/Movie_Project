@@ -23,8 +23,10 @@ export default {
 
   methods: {
     // 영화목록 세부 조회
+    // 한줄평 정보 가져오기
     getMovieDetail(){
       this.$store.dispatch('getMovieDetail',this.p_movie)
+      this.$stroe.dispatch('getComments',this.p_movie)
     }
   },
   watch: {
