@@ -5,25 +5,10 @@ const YOUTUBE_API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
 const YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3/search'
 
 export default{
-  plugins: [createPersistedState({
-    paths:[
-      'comment_id',
-      'comments',
-      'popular_movies',
-      'toprated_movies',
-      '모험',
-      '판타지',
-      '애니메이션',
-      '공포',
-      '액션',
-      '코미디',
-      '스릴러',
-      '범죄',
-      '로맨스',
-      'SF',
-    ],
-  })],
-
+  plugins: [
+    createPersistedState(
+    ),
+  ],
   //==========================state==============================
   state: {
     total_movies : [],
@@ -31,6 +16,7 @@ export default{
     toprated_movies : [], // 영화목록(평점순) 전체 data
     movie_detail : '', // 영화목록 세부 data
     genre_movies : [], // 장르별 영화 목록
+    comments : [],
     youtube_video : null,
 
     // 영화를 장르별로 분류
@@ -117,6 +103,7 @@ export default{
       state.genre_movies = state[genre]
       console.log(state.genre_movies)
     },
+    
 
     GET_COMMENTS(state, commentfilter) {
       state.comments = commentfilter
@@ -178,6 +165,7 @@ export default{
 
     // 영화목록 세부 조회
     getMovieDetail(context, movie){
+      console.log(movie)
       context.commit('GET_MOVIE_DETAIL', movie)
     },
 
@@ -211,7 +199,9 @@ export default{
           }
       })
       .then((res) => {
+          // context.commit('CREATE_COMMENT',res.data)
           console.log(res)
+
       })
       .catch((err) => {
           console.log(err)
@@ -219,7 +209,7 @@ export default{
     },
 
     // 모든 댓글 가져와서 해당 개시글의 댓글로 처리
-    getComments(context,movie_datail) {
+    getComments(context,movie) {
       axios({
         method: 'get',
         url: `http://127.0.0.1:8000/movies/comments/`,
@@ -230,9 +220,8 @@ export default{
         .then((res) => {
           const commentList = res.data
           const commentfilter = []
-
           for (let i = 0; i < commentList.length; i++) {
-            if (commentList[i].movie=== movie_datail.movie_id) {
+            if (commentList[i].movie=== movie.movie_id) {
               commentfilter.push(commentList[i])
             }
           }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-      <!-- <img @click="getMovieDetail" class="Popular_img" :src="poster_path" style="width: 140px; height: 190px;" alt=""> -->
+      <img @click="getMovieDetail" class="Popular_img" :src="poster_path" style="width: 140px; height: 190px;" alt="">
     </a>
   </div>
 </template>
@@ -31,7 +31,6 @@ export default {
     p_movie: {
       deep: true,
       handler(newVal) {
-        // console.log(newVal)
         this.poster_path = make_img_URL + newVal.poster_path
       }
     }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-      <img @click="getMovieDetail" class="Popular_img" :src="poster_path" style="width: 140px; height: 190px;">
+      <!-- <img @click="getMovieDetail" class="Popular_img" :src="poster_path" style="width: 140px; height: 190px;"> -->
     </a>
   </div>
 </template>
