@@ -45,7 +45,6 @@
             <div class="modal-dialog modal-dialog-scrollable">
               <!-- 포스터 -->
               <img :src="image" class="image-container" />
-
               <div class="text">
                 <br /><br />
 
@@ -64,8 +63,6 @@
                   {{ showFullOverview ? "간략히 보기" : "전체 보기" }}
                 </button>
               </div>
-
-              <div style="margin-top: 300px"></div>
             </div>
 
             <!-- 한줄평 창 -->
@@ -87,23 +84,23 @@
                 </svg>
 
                 <div class="card-img-overlay">
-                  <p
-                    class="card-text"
-                    v-for="comment in comments"
-                    :key="comment.id"
-                  >
-                    {{ comment.content }}
-                    <input
-                      type="button"
-                      value="삭제"
-                      @click="deleteComment(comment.id)"
-                    />
-                  </p>
+                  <div class="scroll-container">
+                    <div class="scrollable">
+                      <p class="comments" v-for="comment in comments" :key="comment.id">
+                        {{ comment.username }} : {{ comment.content }}
+                        <input
+                          type="button"
+                          value="삭제"
+                          @click="deleteComment(comment.id)"
+                        />
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <!--  -->
           </div>
+
           <div class="modal-footer"></div>
           <MovieComment />
         </div>
@@ -122,6 +119,7 @@ export default {
   components: {
     MovieComment,
   },
+  
   computed: {
     // 중앙 저장소의 영화 꺼내오기 영화
     movie_detail() {
@@ -168,7 +166,6 @@ export default {
   methods: {
     // 해당 댓글 삭제
     deleteComment(id) {
-      // console.log(id)
       this.$store.dispatch("deleteComment", id);
     },
 
@@ -193,9 +190,9 @@ export default {
       const maxHeight = lineHeight * 3;
 
       if (this.showFullOverview) {
-        overviewElement.style.maxHeight = "none";
-      } else {
         overviewElement.style.maxHeight = `${maxHeight}px`;
+      } else {
+        overviewElement.style.maxHeight = "none";
       }
       this.showFullOverview = !this.showFullOverview;
     },
@@ -205,13 +202,22 @@ export default {
     return {
       isOverflown: false,
       showFullOverview: false,
-      maxHeight: 0, // maxHeight 변수 추가
     };
   },
 };
 </script>
 
-<style>
+<style scoped>
+.cards {
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.scroll-container {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
 .modal-content {
   background-color: rgb(0, 0, 0, 0.78);
   color: rgb(205, 209, 185);
@@ -229,20 +235,15 @@ export default {
 
 .text {
   font-weight: bold;
-  /* margin-top: 5%; */
-
-  font-size: 24px; /* 기본 텍스트 크기 */
-
-  font-weight: bold; /* 텍스트 굵기 */
+  font-size: 24px;
+  text-align: lefts;
 
   @media (max-width: 768px) {
-    /* 화면 너비가 768px 이하일 때 */
-    font-size: 14px; /* 작은 화면에 대한 텍스트 크기 */
+    font-size: 14px;
   }
 
   @media (max-width: 480px) {
-    /* 화면 너비가 480px 이하일 때 */
-    font-size: 12px; /* 아주 작은 화면에 대한 텍스트 크기 */
+    font-size: 12px;
   }
 }
 
@@ -252,7 +253,7 @@ export default {
   margin-right: 10%;
   margin-bottom: 8%;
   width: 33rem;
-  line-height: 3; /* 줄간 간격 조정 */
+  line-height: 3;
 }
 
 h6 {
@@ -261,11 +262,15 @@ h6 {
 }
 
 .card-img {
-  background-color: rgba(
-    0,
-    0,
-    0,
-    1
-  ); /* 이미지의 배경색을 투명도를 갖는 색상으로 설정 */
+  background-color: rgba(0, 0, 0, 1);
+}
+
+.scrollable {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.comments{
+  text-align: left;
 }
 </style>

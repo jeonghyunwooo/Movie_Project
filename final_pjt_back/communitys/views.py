@@ -7,6 +7,7 @@ from .serializers import ReviewListSerializer
 from .models import Review
 
 
+
 @api_view(['GET', 'POST'])
 def review_list(request):
     if request.method == 'POST':
@@ -19,6 +20,7 @@ def review_list(request):
         reviews = get_list_or_404(Review)
         serializer = ReviewListSerializer(reviews, many=True)
         return Response(serializer.data)         
+
 
 @api_view(['GET', 'DELETE', 'PUT'])
 def review_detail(request, review_pk):
@@ -35,6 +37,9 @@ def review_detail(request, review_pk):
 
     elif request.method == 'PUT':
         serializer = ReviewListSerializer(review, data=request.data)
+        print('---------------------------------')
+        print(serializer)
+        print('---------------------------------')
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)

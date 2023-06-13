@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>MovieComment</h1>
+    <h1>Comment</h1>
     <form @submit.prevent="createComment">
       <label for="content">댓글 :</label>
       <textarea

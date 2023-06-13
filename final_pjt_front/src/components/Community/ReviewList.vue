@@ -1,11 +1,16 @@
 <template>
-  <div>
-    <p>ReviewList</p>
-    <ReviewListItem
-    v-for="review in reviews"
-    :key="review.id" 
-    :review="review"
-    />
+  <div class="scroll-wrapper">
+    
+    <!-- 리뷰 작성 게시판 -->
+    <div class="box3">
+      <ReviewListItem
+      v-for="review in reviews"
+      :key="review.id" 
+      :review="review"
+      />
+    </div>
+    <!--  -->
+    
   </div>
 </template>
 
@@ -24,6 +29,16 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+/* .box4{
+  text-align: left;
+} */
+.box3{
+  margin-left: 5%;
+  margin-top: 8%;
+}
+.scroll-wrapper {
+  overflow-y: auto;
+  max-height: 840px; /* 스크롤이 보이는 최대 높이를 지정하세요 */
+}
 </style>

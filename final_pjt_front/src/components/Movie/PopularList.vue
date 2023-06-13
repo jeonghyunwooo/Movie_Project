@@ -4,7 +4,7 @@
       <h3 id="Popular_word">실시간 인기 영화</h3>
       <swiper :options="swiperOptions" @click-slide="handleClickSlide">
         <swiper-slide
-          v-for="p_movie in popular_movies"
+          v-for="p_movie in total_moives"
           :key="p_movie.reallyIndex"
         >
           <div class="slide-content">
@@ -60,10 +60,10 @@ export default {
         // slidesPerGroup: 9,
         spaceBetween: 20,
         autoplay: {
-          delay: 1000,
+          delay: 2000,
           disableOnInteraction: false,
         },
-        // loop: true, // 데이터가 끝까지 다읽으면 처음으로 돌아옴
+        loop: true, // 데이터가 끝까지 다읽으면 처음으로 돌아옴
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
@@ -124,7 +124,9 @@ export default {
 <style scoped>
 .box {
   margin-right: 95px;
+  margin-top: 30px;
 }
+
 .image-container {
   width: 100%;
   overflow: hidden;
@@ -135,6 +137,7 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 .slide-content {
   flex-direction: column;
 }

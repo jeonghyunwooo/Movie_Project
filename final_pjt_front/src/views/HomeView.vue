@@ -84,7 +84,8 @@ export default {
   margin-left: 4%;
   margin-right: 4%;
   margin-bottom: 0px;
-}
+  height: 300px;
+} 
 
 .film {
   /* position: absolute; */
@@ -120,9 +121,15 @@ export default {
   font-family: "Roboto", sans-serif;
   margin-top: 6px;
   color: grey;
+  
 }
 .home_main {
   display: flex;
   flex-direction: column;
 }
+
+.box{
+  margin-bottom: 0px;
+}
+
 </style>

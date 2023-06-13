@@ -1,13 +1,13 @@
 <template>
   <div>
-    <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    <!-- <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> -->
       <img
         @click="getMovieDetail"
         class="Popular_img"
         :src="poster_path"
         style="width: 140px; height: 190px"
       />
-    </a>
+    <!-- </a> -->
   </div>
 </template>
 
@@ -30,7 +30,7 @@ export default {
     // 영화목록 세부 조회
     getMovieDetail() {
       this.$store.dispatch("getMovieDetail", this.t_movie);
-      this.$stroe.dispatch("getComments", this.t_movie);
+      this.$store.dispatch("getComments", this.t_movie);
     },
   },
 };

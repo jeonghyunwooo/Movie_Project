@@ -6,6 +6,7 @@ import HomeView from '@/views/HomeView'
 import CommunityView from '@/views/CommunityView'
 import ReviewView from '@/views/ReviewView'
 import ReviewCreateView from '@/views/ReviewCreateView'
+import ReviewUpdateView from '@/views/ReviewUpdateView'
 import ReviewDetail from '@/views/ReviewDetail'
 import PlayListView from '@/views/PlayListView'
 import MypageView from '@/views/MypageView'
@@ -47,6 +48,11 @@ const routes = [
         path: '/ReviewCreateView',
         name: 'ReviewCreateView',
         component: ReviewCreateView
+      },
+      {
+        path: '/ReviewUpdateView/:id',
+        name: 'ReviewUpdateView',
+        component: ReviewUpdateView
       },
     ]
   },

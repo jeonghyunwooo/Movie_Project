@@ -1,8 +1,8 @@
 <template>
   <div>
-    <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    <!-- <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> -->
       <img @click="getMovieDetail" class="Popular_img" :src="poster_path" style="width: 140px; height: 190px;" alt="">
-    </a>
+    <!-- </a> -->
   </div>
 </template>
 
@@ -26,17 +26,17 @@ export default {
     // 한줄평 정보 가져오기
     getMovieDetail(){
       this.$store.dispatch('getMovieDetail',this.p_movie)
-      this.$stroe.dispatch('getComments',this.p_movie)
+      this.$store.dispatch('getComments',this.p_movie)
     }
   },
-  watch: {
-    p_movie: {
-      deep: true,
-      handler(newVal) {
-        this.poster_path = make_img_URL + newVal.poster_path
-      }
-    }
-  }
+  // watch: {
+  //   p_movie: {
+  //     deep: true,
+  //     handler(newVal) {
+  //       this.poster_path = make_img_URL + newVal.poster_path
+  //     }
+  //   }
+  // }
 }
 </script>
 

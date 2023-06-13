@@ -22,7 +22,7 @@ TMDB_GENRES_MOVIES=f'https://api.themoviedb.org/3/genre/movie/list?&api_key={api
 # TMDB/MOVIES/Details의 영화데이터 DB저장
 @api_view(['GET'])
 def save_total_movies(request):
-    nums = range(1,100)
+    nums = range(10001,20000)
     for num in nums:
         try:
             TMDB_MOVIES_VIDEOS_API = f'https://api.themoviedb.org/3/movie/{num}/videos?api_key={api_key}&language=ko-KR'
@@ -232,4 +232,32 @@ def genres_movies(request, genre):
     return Response(serializer.data)
 
 
+# 영화 제목 검색하기
+@api_view(['GET'])
+def movie_search(request, movie_title):
+    search_movies = []
+    total_movie = TotalMovies.objects.all()
+    for movie in total_movie:
+        if movie_title in movie.title:
+            search_movies.append(movie)
+        genres = movie.genres
+        genre_lst = genres[2:len(genres)-2].split("', '")
+        
+        for movie_genre in genre_lst:
+            if movie_title == movie_genre : 
+                search_movies.append(movie)
+
+    serializer = TotalMoviesSerializer(search_movies, many=True)        
+    return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+def comment_delete(request, comment_id):
+    print('-------------------')
+    print(comment_id)
+    print('-------------------')
+    review = get_object_or_404(MovieComment, pk=comment_id)
+    if request.method == 'DELETE':
+        review.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 

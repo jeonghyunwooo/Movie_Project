@@ -22,7 +22,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .main_home{
   position : relative;
   overflow: hidden;
@@ -33,6 +33,7 @@ export default {
   width: 100%;
   left : 0px;
   top : 0px;
+  opacity: 0.4;
 }
 .main_words{
   color: white;

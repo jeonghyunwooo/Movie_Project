@@ -37,6 +37,12 @@ urlpatterns = [
     path('comments/', views.comment_list),
 
     # 특정 장르의 영화 가져오기
-    path('<str:genre>/genres_movies/', views.genres_movies)
+    path('<str:genre>/genres_movies/', views.genres_movies),
+    
+    # 해당 영화 댓글 삭제
+    path('<int:comment_id>/comment_delete/', views.comment_delete),
+
+    # 검색해서 영화찾기
+    path('<str:movie_title>/search/', views.movie_search)
 
 ]

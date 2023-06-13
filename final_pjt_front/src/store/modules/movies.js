@@ -6,18 +6,18 @@ const YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3/search'
 
 export default{
   plugins: [
-    createPersistedState(
-    ),
+    createPersistedState({
+    }),
   ],
   //==========================state==============================
   state: {
     total_movies : [],
     popular_movies : [], // 영화목록(인기) 전체 data
-    toprated_movies : [], // 영화목록(평점순) 전체 data
+    toprated_movies : [], // 영화목록(평점순) 전체 datav
     movie_detail : '', // 영화목록 세부 data
     genre_movies : [], // 장르별 영화 목록
-    comments : [],
     youtube_video : null,
+    // comments : []
   },
 
   //===========================getters==============================
@@ -29,7 +29,6 @@ export default{
     movie_detail:(state) => state.movie_detail,
     genre_movies:(state) => state.genre_movies,
     comments:(state) => state.comments,
-    genre:(state) => state.genre,
   },
   
   //===========================mutations==============================
@@ -116,19 +115,18 @@ export default{
     getMovieDetail(context, movie){
       context.commit('GET_MOVIE_DETAIL', movie)
     },
-
+    
     // 개별 영화에 댓글 생성 
     createComment(context, payload){
-      const movie = payload.movie
+      const movie_id = payload.movie.movie_id
       const content = payload.content
-
       if (!content){
         alert('제목 입력해주세요')
         return
       }
       axios({
           method: 'post',
-          url:`http://127.0.0.1:8000/movies/${movie.movie_id}/comments/`,
+          url:`http://127.0.0.1:8000/movies/${movie_id}/comments/`,
           data: {content},
           headers: {
           Authorization: `Token ${context.rootState.token}`
@@ -136,7 +134,8 @@ export default{
       })
       .then(() => {
           // context.commit('CREATE_COMMENT',res.data)
-          // console.log(res)
+          // console.log(res.data)
+          // context.dispatch('getComments',res.data.movie)
 
       })
       .catch((err) => {
@@ -146,6 +145,7 @@ export default{
 
     // 모든 댓글 가져와서 해당 개시글의 댓글로 처리
     getComments(context,movie) {
+
       axios({
         method: 'get',
         url: `http://127.0.0.1:8000/movies/comments/`,
@@ -156,8 +156,9 @@ export default{
         .then((res) => {
           const commentList = res.data
           const commentfilter = []
+          // console.log(commentList)
           for (let i = 0; i < commentList.length; i++) {
-            if (commentList[i].movie===movie) {
+            if (commentList[i].movie===movie.movie_id) {
               commentfilter.push(commentList[i])
             }
           }
@@ -189,8 +190,18 @@ export default{
     },
 
     // 영화 세부 목록에 대한 간단리뷰 삭제
-    deleteComment(context, id) {
-      context.commit('DELETE_COMMENT', id);
+    deleteComment(context,id) {
+      console.log(context)
+      console.log(id)
+
+      axios({
+        method: 'delete',
+        url: `http://127.0.0.1:8000/movies/${id}/comment_delete/`,
+        // data : {id}
+      })
+      .then(()=> {
+      })
+      .catch(err=>console.log(err))
     }
   },
 }

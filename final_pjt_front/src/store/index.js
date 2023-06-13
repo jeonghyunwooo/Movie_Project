@@ -93,7 +93,9 @@ export default new Vuex.Store({
         data: {username,password1,password2}
         })
         .then((res) => {
+          // console.log(res)
           context.commit('SAVE_TOKEN', res.data.key)
+          // router.push({name : 'LoginView'})
         })
         //  ValidationError 예외가 발생한 경우 error.response.data를 출력
         .catch((error) => {
